@@ -9,17 +9,17 @@ import { dataJson } from '../utils/api'
 
 export default function FormChat({ navigation }) {
     const dispatch = useDispatch()
-    const parseJsonData = dataJson()
+    const [dataUsername, setDataUsername] = useState(null)
     const [chat, setChat] = useState(false)
     const [message, setMessage] = useState('')
     const [name, setName] = useState('')
     const [isConnected, setIsConnected] = useState(socket.connected);
 
     useEffect(() => {
+        parseDataConnect()
+
         socket.on('connect', () => {
-            parseJsonData.then((data) => {
-                socket.emit('join room', data.username)
-            }).catch((err) => console.log(err))
+            socket.emit('join room', dataUsername?.username)
             setIsConnected(true);
         });
 
@@ -61,6 +61,11 @@ export default function FormChat({ navigation }) {
     const handleFormChat = (target) => {
         setChat(true)
         setName(target)
+    }
+
+    const parseDataConnect = async () => {
+        const parseJsonData = await dataJson()
+        setDataUsername(parseJsonData)
     }
 
     return (
