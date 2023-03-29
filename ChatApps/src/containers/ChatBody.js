@@ -37,8 +37,8 @@ export default function ChatBody(props) {
         props.setMessage('')
     }
 
-    const resendMessage = (_id, message, sender, name) => {
-        dispatch(resendChat(_id, message, sender, name))
+    const resendMessage = (_id, message, name) => {
+        dispatch(resendChat(_id, message, name))
         props.setMessage('')
     }
 
